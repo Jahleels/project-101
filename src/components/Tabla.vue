@@ -1,6 +1,6 @@
 <template>
   <v-container class="my-10">
-      <h1 class="mb-8">Visualizar datos</h1>
+    <h1 class="mb-8">Visualizar datos</h1>
     <v-data-table :headers="headers" :items="personas" class="elevation-5">
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
@@ -29,118 +29,16 @@ export default {
       { text: "Lider", value: "lider", sortable: false },
       { text: "Acciones", value: "actions", sortable: false },
     ],
-    personas: []
+    personas: [],
   }),
 
-  created() {
-    this.initialize();
-  },
+    mounted() {
+        this.axios.get('/')
+        .then((res) => {
+            this.personas = res.data;
+            console.log(res.data)
+        })
+    }
 
-  methods: {
-    initialize() {
-      this.personas = [
-        {
-          name: "Frozen Yogurt",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Ice cream sandwich",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Eclair",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Cupcake",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Gingerbread",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Jelly bean",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Lollipop",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Honeycomb",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "Donut",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-        {
-          name: "KitKat",
-          cc: "1789",
-          phoneNumber: "7654",
-          email: " dfghjk",
-          city: "maicao",
-          puesto: "1",
-          mesa: "3",
-          lider: "jhgfd",
-        },
-      ];
-    },
-  },
 };
 </script>

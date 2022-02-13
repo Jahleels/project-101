@@ -7,7 +7,7 @@
     <v-tabs v-model="tab" background-color="transparent" color="basil" centered>
       <v-tab v-for="item in items" :key="item">
         <v-icon class="mr-3">
-            {{ item.icon }}
+          {{ item.icon }}
         </v-icon>
         {{ item.tab }}
       </v-tab>
@@ -15,12 +15,12 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-          <agregar />
+        <agregar />
+        <test />
       </v-tab-item>
       <v-tab-item>
-          <tabla />
+        <tabla />
       </v-tab-item>
-
     </v-tabs-items>
   </v-card>
 </template>
@@ -28,13 +28,16 @@
 <script>
 import Agregar from "../components/Agregar.vue";
 import Tabla from "../components/Tabla.vue";
+import Test from '../components/test.vue';
 export default {
-  components: { Tabla, Agregar },
+  components: { Tabla, Agregar, Test },
   data() {
     return {
       tab: null,
-      items: [{tab: 'Entrada', icon: ' mdi-plus'},
-              {tab: 'Visualizar', icon: 'mdi-table-large'}]
+      items: [
+        { tab: "Entrada", icon: " mdi-plus" },
+        { tab: "Visualizar", icon: "mdi-table-large" },
+      ],
     };
   },
 };
