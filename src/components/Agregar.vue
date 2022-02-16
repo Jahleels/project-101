@@ -2,7 +2,11 @@
   <v-container class="my-10">
     <v-card class="pa-16 elevation-5" rounded="xl">
       <h1 class="mb-8">Fidelización persona</h1>
-      <v-alert transition="expand-transition" v-show="alertSuccess" type="success">
+      <v-alert
+        transition="expand-transition"
+        v-show="alertSuccess"
+        type="success"
+      >
         Información enviada con exito
       </v-alert>
       <v-alert transition="expand-transition" v-show="alertError" type="error">
@@ -120,15 +124,16 @@
               <v-text-field
                 color="yellow darken-1"
                 label="Carrera"
-                v-model="nuevaPersona.address.carrera"
+                v-model="address.carrera"
                 outlined
               >
               </v-text-field>
             </v-col>
             <v-col cols="2">
               <v-text-field
+                color="yellow darken-1"
                 label="Calle"
-                v-model="nuevaPersona.address.calle"
+                v-model="address.calle"
                 outlined
               >
               </v-text-field>
@@ -138,7 +143,7 @@
                 color="yellow darken-1"
                 prepend-icon="mdi-pound"
                 label="Número"
-                v-model="nuevaPersona.address.numero1"
+                v-model="address.numero1"
                 outlined
               >
               </v-text-field>
@@ -149,7 +154,7 @@
                 class="ml-n4"
                 prepend-icon="mdi-minus-thick"
                 label="Número"
-                v-model="nuevaPersona.address.numero2"
+                v-model="address.numero2"
                 outlined
               >
               </v-text-field>
@@ -201,6 +206,7 @@
 </template>
 
 <script>
+import decode from "jwt-decode";
 import { required, email } from "vee-validate/dist/rules";
 import {
   extend,
@@ -227,6 +233,13 @@ export default {
   },
 
   data: () => ({
+    address: {
+      carrera: "",
+      calle: "",
+      numero1: "",
+      numero2: "",
+    },
+
     alertSuccess: false,
     alertError: false,
 
@@ -240,13 +253,28 @@ export default {
       phoneNumber: null,
       email: "",
       city: "",
-      address: { carrera: "", calle: "", numero1: "", numero2: "" },
+      address: "",
       puesto: null,
       mesa: null,
       lider: "",
+      user: "",
     },
   }),
+
   methods: {
+    addressFinished() {
+      this.nuevaPersona.address = "".concat(
+        "Kra ",
+        this.address.carrera,
+        " cll ",
+        this.address.calle,
+        " # ",
+        this.address.numero1,
+        " - ",
+        this.address.numero2
+      );
+    },
+
     onSubmit() {
       if (this.$refs.observer.validate()) {
         return;
@@ -254,10 +282,10 @@ export default {
     },
     sendData() {
       this.loader = true;
+      this.addressFinished();
       this.axios
         .post("/send", this.nuevaPersona)
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           this.$refs.observer.reset();
           this.name = this.cc = this.phoneNumber = "";
           this.loader = false;
@@ -265,13 +293,17 @@ export default {
           this.$nextTick(() => {
             this.$refs.form.reset();
           });
-          setTimeout(() => {this.alertSuccess = false}, 5.0*1000);
+          setTimeout(() => {
+            this.alertSuccess = false;
+          }, 5.0 * 1000);
         })
         .catch((err) => {
           console.log(err);
           this.loader = false;
           this.alertError = true;
-          setTimeout(() => {this.alertError = false}, 5.0*1000); 
+          setTimeout(() => {
+            this.alertError = false;
+          }, 5.0 * 1000);
         });
     },
 
@@ -288,6 +320,8 @@ export default {
 
   mounted() {
     this.getDataCities();
+    let token = decode(localStorage.getItem("token"));
+    this.nuevaPersona.user = token.name;
   },
 };
 </script>

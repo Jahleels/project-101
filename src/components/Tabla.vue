@@ -26,7 +26,7 @@ export default {
       { text: "Correo Electrónico", value: "email", sortable: false },
       { text: "Municipio", value: "city", sortable: true },
       { text: "Barrio", value: "barrio", sortable: true },
-      { text: "Dirección", value: "address", sortable: false},
+      { text: "Dirección", value: "address", sortable: false },
       { text: "Puesto de votación", value: "puesto", sortable: false },
       { text: "Mesa", value: "mesa", sortable: true },
       { text: "Lider", value: "lider", sortable: false },

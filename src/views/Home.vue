@@ -1,5 +1,5 @@
 <template>
-  <v-card color="basil">
+  <v-card color="basil" v-if="isOn">
     <v-card-title class="text-center justify-center py-6">
       <h1 class="font-weight-bold text-h2 basil--text gradient-text">101</h1>
     </v-card-title>
@@ -37,10 +37,11 @@ export default {
   components: { Tabla, Agregar },
   data() {
     return {
+      isOn: localStorage.getItem("token"),
       tab: null,
       items: [
         { tab: "Nueva persona", icon: " mdi-plus" },
-        { tab: "Ver tabla", icon: "mdi-table-large" },
+        { tab: "Reportes", icon: "mdi-table-large" },
       ],
       personas: [],
     };
@@ -58,11 +59,12 @@ export default {
     logOut() {
       localStorage.removeItem("token");
       this.$router.push({ name: "login" });
+      this.isOn.destroy();
     },
     isSuperUser() {
-        let token = decode(localStorage.getItem('token'));
-        return token.rol === 'Administrador' ? true : false;
-    }
+      let token = decode(localStorage.getItem("token"));
+      return token.rol === "Administrador" ? true : false;
+    },
   },
 };
 </script>
